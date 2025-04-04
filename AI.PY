@@ -1,6 +1,6 @@
 import openai
 
-# Configure OpenAI API Key
+# Configuring OpenAI API Key
 openai.api_key = "your_openai_api_key"
 
 @app.route('/chat', methods=['POST'])
