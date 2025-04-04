@@ -1,4 +1,4 @@
-// Handle login form submission
+// This handles login form submission
 document.getElementById('login-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
