@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="floating-profile">
+            <img src="assets/avatar.jpg" alt="Student Avatar" class="profile-avatar">
+            <div class="profile-details">
+                <h3 class="profile-name">Jay Ngugi</h3>
+                <p class="profile-role">Software Engineering Student</p>
+            </div>
+        </div>
+
+        <button id="sidebar-toggle" class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#dashboard" class="active" data-section="dashboard"><i class="fas fa-home"></i> <span class="nav-text">Dashboard</span></a></li>
+                    <li><a href="#courses" data-section="courses"><i class="fas fa-book"></i> <span class="nav-text">Courses</span></a></li>
+                    <li><a href="#notifications" data-section="notifications"><i class="fas fa-bell"></i> <span class="nav-text">Notifications</span></a></li>
+                    <li><a href="#profile" data-section="profile"><i class="fas fa-user"></i> <span class="nav-text">Profile</span></a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="welcome-banner">
+                    <h1>Welcome back, Jay!</h1>
+                    <p>Here's what's happening today</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h2>Recent Notifications</h2>
+                        <div class="notification-list" id="notification-list">
+                            <!-- Notifications will be added dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h2>Upcoming Events</h2>
+                        <div class="events-list" id="events-list">
+                            <!-- Events will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses Section -->
+            <section id="courses" class="content-section">
+                <h1>Your Courses</h1>
+                <div class="section-header">
+                    <div class="filters">
+                        <button class="filter-btn active">All Courses</button>
+                        <button class="filter-btn">In Progress</button>
+                        <button class="filter-btn">Completed</button>
+                    </div>
+                    <div class="course-actions">
+                        <div class="course-search">
+                            <input type="text" placeholder="Search courses..." id="course-search">
+                        </div>
+                        
+                    </div
+                </div>
+                
+                <div class="course-grid" id="course-list">
+                    <!-- Course cards will be added dynamically -->
+                </div>
+
+                <!-- Course Details Modal -->
+                <div id="course-details-modal" class="modal-overlay" style="display: none;">
+                    <div class="modal course-modal">
+                        <div class="modal-header">
+                            <h2 id="course-modal-title"></h2>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <div class="course-modal-content">
+                            <div class="course-tabs">
+                                <button class="tab-btn active" data-tab="overview">Overview</button>
+                                <button class="tab-btn" data-tab="topics">Topics</button>
+                                <button class="tab-btn" data-tab="assignments">Assignments</button>
+                                <button class="tab-btn" data-tab="grades">Grades</button>
+                            </div>
+
+                            <!-- Overview Tab -->
+                            <div class="tab-content active" id="overview-tab">
+                                <div class="course-info">
+                                    <div class="info-group">
+                                        <h3>Course Details</h3>
+                                        <p><strong>Code:</strong> <span id="course-code"></span></p>
+                                        <p><strong>Instructor:</strong> <span id="course-instructor"></span></p>
+                                        <p><strong>Credits:</strong> <span id="course-credits"></span></p>
+                                        <p><strong>Semester:</strong> <span id="course-semester"></span></p>
+                                    </div>
+                                    <div class="info-group">
+                                        <h3>Progress</h3>
+                                        <div class="progress-circle">
+                                            <div class="progress-value">0%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="course-description">
+                                    <h3>Description</h3>
+                                    <p id="course-description"></p>
+                                </div>
+                            </div>
+
+                            <!-- Topics Tab -->
+                            <div class="tab-content" id="topics-tab">
+                                <div class="topics-list">
+                                    <!-- Topics will be added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Assignments Tab -->
+                            <div class="tab-content" id="assignments-tab">
+                                <div class="assignments-header">
+                                    <h3>Course Assignments</h3>
+                                    <div class="assignment-filters">
+                                        <button class="filter-btn active">All</button>
+                                        <button class="filter-btn">Pending</button>
+                                        <button class="filter-btn">Submitted</button>
+                                        <button class="filter-btn">Graded</button>
+                                    </div>
+                                </div>
+                                <div class="assignments-list">
+                                    <!-- Assignments will be added dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Grades Tab -->
+                            <div class="tab-content" id="grades-tab">
+                                <div class="grades-summary">
+                                    <div class="overall-grade">
+                                        <h3>Overall Grade</h3>
+                                        <div class="grade-circle">
+                                            <span class="grade-value">--</span>
+                                        </div>
+                                    </div>
+                                    <div class="grade-distribution">
+                                        <h3>Grade Distribution</h3>
+                                        <div class="grade-chart">
+                                            <canvas id="grade-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grades-list">
+                                    <h3>Assignment Grades</h3>
+                                    <table class="grades-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Assignment</th>
+                                                <th>Due Date</th>
+                                                <th>Grade</th>
+                                                <th>Weight</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="grades-table-body">
+                                            <!-- Grades will be added dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications Section -->
+            <section id="notifications" class="content-section">
+                <h1>All Notifications</h1>
+                <div class="notifications-container">
+                    <div class="notification-filters">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Unread</button>
+                        <button class="filter-btn">Important</button>
+                    </div>
+                    <div class="full-notification-list">
+                        <!-- All notifications will be added dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <h1>Profile Settings</h1>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-picture-container">
+                            <img src="assets/avatar.jpg" alt="Profile Picture" class="large-avatar" id="profile-picture">
+                            <div class="profile-picture-overlay">
+                                <button class="upload-picture-btn" id="upload-picture-btn">
+                                    <i class="fas fa-camera"></i>
+                                    Change Picture
+                                </button>
+                            </div>
+                            <input type="file" id="picture-upload" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="profile-info">
+                            <h2>Jay Ngugi</h2>
+                            <p>Software Engineering Student</p>
+                        </div>
+                    </div>
+                    <div class="profile-details-grid">
+                        <div class="profile-card">
+                            <h3>Personal Information</h3>
+                            <form class="profile-form">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" value="John Doe" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" value="john.doe@example.com" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Student ID</label>
+                                    <input type="text" value="CS2023001" disabled>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="profile-card">
+                            <h3>Academic Information</h3>
+                            <div class="academic-info">
+                                <p><strong>Program:</strong> Bachelor of Science in Computer Science</p>
+                                <p><strong>Year Level:</strong> 3rd Year</p>
+                                <p><strong>GPA:</strong> 3.8</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="profile-section">
+                        <div class="section-header">
+                            <h3>Experience</h3>
+                            <button class="add-btn" id="add-experience-btn">
+                                <i class="fas fa-plus"></i> Add Experience
+                            </button>
+                        </div>
+                        <div class="experience-list" id="experience-list">
+                            <!-- Experience items will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Certifications Section -->
+                    <div class="profile-section">
+                        <div class="section-header">
+                            <h3>Certifications</h3>
+                            <button class="add-btn" id="add-certification-btn">
+                                <i class="fas fa-plus"></i> Add Certification
+                            </button>
+                        </div>
+                        <div class="certification-list" id="certification-list">
+                            <!-- Certification items will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div class="chatbot-container">
+            <button id="chat-toggle" class="chat-toggle">
+                <i class="fas fa-comments"></i>
+                <span>AI Assistant</span>
+            </button>
+            <div class="chat-window">
+                <div class="chat-header">
+                    <img src="assets/ai-avatar.png" alt="AI Assistant" class="ai-avatar">
+                    <h3>AI Assistant</h3>
+                    <button class="minimize-chat">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+                <div id="chat-messages" class="chat-messages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Ask me anything...">
+                    <button id="send-chat">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
